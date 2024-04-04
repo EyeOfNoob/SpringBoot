@@ -13,8 +13,8 @@ public class EmpVO {
 	private String phoneNumber;
 	private Date hireDate;
 	private String jobId;
-	private Integer salary;
-	private Integer commissionPct;
-	private Integer managerId;
-	private Integer departmentId;
+	private int salary;
+	private int commissionPct;
+	private int managerId;
+	private int departmentId;
 }
