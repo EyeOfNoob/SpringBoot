@@ -6,12 +6,12 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class AutoStartBrowser {
 
-	//@PostConstruct
+	@PostConstruct
 	public void init() {
-		String url = "http://localhost:8080";
+		String url = "http://localhost:8080/empList";
 		System.setProperty("java.awt.headless", "false");
 		try {
 			java.awt.Desktop.getDesktop().browse(URI.create(url));

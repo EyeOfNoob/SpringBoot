@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>전체 사원 조회</title>
+<style>
+table, th, td {
+  border: 2px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+<body>
+	<a href="/empInsert">등록</a>
+	<table>
+		<thead>
+			<tr>
+				<th>사원번호</th>
+				<th>이름</th>
+				<th>입사일자</th>
+				<th>업무</th>
+			</tr>
+		</thead>
+		<tbody>
+			<th:block th:each="empInfo, stat : ${empList}">
+				<tr th:id="${stat.index}" 
+					th:onclick="|location.href='@{/empInfo(employeeId=${empInfo.employeeId})}'|">
+					<td th:text="${empInfo.employeeId}"></td>
+					<td th:text="${empInfo.lastName}"></td>
+					<td>[[ ${#dates.format(empInfo.hireDate, 'yyyy년MM월dd일')} ]]</td>
+					<td>[[ ${empInfo.jobId} ]]</td>
+				</tr>
+			</th:block>
+		</tbody>
+	</table>
+</body>
+</html>

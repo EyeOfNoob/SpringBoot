@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,14 +28,14 @@ public class HomeController {
 	//Method는 상관없음
 	//Content-type : application/x-www-form-urlencoded
 	@RequestMapping(path="comobj", method= {RequestMethod.GET, RequestMethod.POST})
-	@ResponseBody
-	public String commandObject(EmpVO empVO) {
+	public String commandObject(@ModelAttribute("emp") EmpVO empVO) {
 		log.info("path : /comobj");
 		log.error("┌─┐ = employee_id : " + empVO.getEmployeeId());
 		log.error("├─┘ = last_name : " + empVO.getLastName());
 		log.error("└─┘ = ");
 		log.info(empVO.toString());
-		return "";
+		return "home";
+		//classpath:/templates/home.html
 	}
 	
 	@RequestMapping(path="reqparm", method ={RequestMethod.GET, RequestMethod.POST})
@@ -59,9 +60,9 @@ public class HomeController {
 	@ResponseBody
 	public String pathVariable(@PathVariable String id,@PathVariable String no,@PathVariable String code) {
 		log.info("path : /reqparm");
-		log.error("┌─┐ = id : " + id);
-		log.error("┌─┐ = no : " + no);
-		log.error("┌─┐ = code : " + code);
+		log.error("┌─┘ = id : " + id);
+		log.error("└─┐ = no : " + no);
+		log.error("┌─┘ = code : " + code);
 		return "";
 	}
 	
