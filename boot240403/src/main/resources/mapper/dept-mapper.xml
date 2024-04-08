@@ -35,20 +35,20 @@
 				(
 					department_id
 					, department_name
-					<if test= "managerId !=null and !managerId.equals('')">
+					<if test= "managerId > 0">
 						, manager_id
 					</if>
-					<if test= "locationId !=null and !locationId.equals('')">
+					<if test= "locationId > 0">
 						, location_id
 					</if>
 				)
 		VALUES  (
 					#{departmentId}
 					, #{departmentName}
-					<if test= "managerId !=null and !managerId.equals('')">
+					<if test= "managerId > 0">
 						, #{managerId}
 					</if>
-					<if test= "locationId !=null and !locationId.equals('')">
+					<if test= "locationId > 0">
 						, #{locationId}
 					</if>
 				)
@@ -60,10 +60,10 @@
 		UPDATE departments
 		SET
 			department_name = #{departmentName}
-			<if test= "managerId !=null and !managerId.equals('')">
+			<if test= "managerId > 0">
 				, manager_id = #{managerId}
 			</if>
-			<if test= "locationId !=null and !locationId.equals('')">
+			<if test= "locationId > 0">
 				, location_id = #{locationId}
 			</if>
 		WHERE department_id = #{departmentId}

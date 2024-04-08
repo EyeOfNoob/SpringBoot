@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/layouts/default_layout}"
+	  layout:fragment="content">
+<head>
+<meta charset="UTF-8">
+<title>등록</title>
+</head>
+<body>
+	<form th:action="@{/empUpdate}" method="post" th:object="${empInfo}">
+		<div>
+			<label>사원번호<input type="text" th:field="*{employeeId}" readonly></label>
+		</div>
+		<div>
+			<label>이름<input type="text" th:field="*{lastName}" ></label>
+		</div>
+		<div>
+			<label>이메일<input type="text" th:field="*{email}" ></label>
+		</div>
+		<div>
+			<label>입사일<input type="date" th:field="*{hireDate}" ></label>
+		</div>
+		<div>
+			<label>급여<input type="number" th:field="*{salary}" ></label>
+		</div>
+		<div>
+			<button type="button" id="updateBtn">등록</button>
+		</div>
+	</form>
+	<script>
+		document.querySelector('#updateBtn')
+				.addEventListener('click', updateAjax);
+		
+		function updateAjax(e){
+			
+			if(!validationCheck()) return;
+
+			let dataObj = getEmpObj();
+			
+			fetch('empUpdate', {
+				method : 'post',
+				/* headers : {
+					'Content-type' : 'application/json'
+				},
+				body : JSON.stringify(dataObj) */
+				body : new URLSearchParams(dataObj)
+			})
+			.then(res => res.json())
+			.then(result => {
+				console.log(result);
+				if(result != null){
+					alert('정상적으로 수정되었습니다.');
+					location.href = "/empInfo?employeeId="+document.getElementById('employeeId').value
+				}else{
+					alert('수정되지 않았습니다.\n확인해주세요.')
+				}
+			})
+		};
+		
+		function validationCheck(){
+			let name = document.getElementById('lastName');
+			if(name.value == ''){
+				alert('사원이름은 필수로 입력해야합니다.');
+				name.focus();
+				return false;
+			}
+			return true;
+		}
+		
+		function getEmpObj(){		//form태그에만 작동
+			let formTag = document.querySelector('form');
+		
+			let formData = new FormData(formTag);
+			
+			let formObj = {};
+			formData.forEach((val, key) => {
+				formObj[key] = val;
+			})
+			
+			return formObj;
+		} 
+	</script>
+	<script>
+		//jQuery 이용
+		/* $('#updateBtn').on('click', updateAjaxJq);
+		
+		function updateAjaxJq(e){
+			//Validation check
+			if(!validationCheck()) return;
+			
+			//보낼 데이터 정리
+			let dataObj = getEmpObj();
+			
+			//Ajax
+			$.ajax('empUpdate',{
+				type : 'post',
+				//data : dataObj
+				contentType : 'application/json',
+				data : JSON.stringify(dataObj)
+			})
+			.done(result => {
+				console.log(result);
+				if(result != null){
+					alert('정상적으로 수정되었습니다.');
+					//location.href = "/empInfo?employeeId="+$('#employeeId').val()
+				}else{
+					alert('수정되지 않았습니다.\n확인해주세요.')
+				}
+			})
+			.fail(err => console.log(err));
+		}
+		
+		function validationCheck(){
+			let name = $('#lastName');
+			if(name.val() == ''){
+				alert('사원이름은 필수로 입력해야합니다.');
+				name.focus();
+				return false;
+			}
+			return true;
+		}
+		
+		function getEmpObj(){		//form태그에만 작동
+			let formAry = $('form').serializeArray();
+			//[ {name : 'employeeId', value : '209'},
+			//  {name : 'lastName', value : 'Kang'}, ...]
+			let resultObj = {};
+			formAry.forEach((item) => {
+				resultObj[item.name] = item.value;
+			})
+			//{ employeeId : '209', lastName : 'Kang', ...}
+			return resultObj;
+		} */
+	</script>
+</body>
+</html>

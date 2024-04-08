@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/layouts/default_layout}"
+	  layout:fragment="content">
 <head>
 <meta charset="UTF-8">
 <title>등록</title>
 </head>
 <body>
-	<form th:action="@{/empInsert}" method="post" th:object="${empVO}">
+	<form name="insertForm" th:action="@{/empInsert}" method="post" th:object="${empVO}">
 		<div>
-			<label>사원번호<input type="text" th:field="*{employeeId}" readonly></label>
+			<label>번호<input type="text" th:field="*{employeeId}" readonly></label>
 		</div>
 		<div>
 			<label>이름<input type="text" th:field="*{lastName}" ></label>
@@ -31,5 +34,35 @@
 			<button type="button" th:onclick="|location.href='@{/empList}'|">목록</button>
 		</div>
 	</form>
+	<script>
+		document.querySelector('form[name="insertForm"]')
+				.addEventListener('submit', validationCheck);
+		function validationCheck(e){
+			e.preventDefault();
+			
+			let name = document.getElementById('lastName');
+			if(name.value == ''){
+				alert('사원이름은 필수로 입력해야합니다.');
+				name.focus();
+				return;
+			}
+			
+			let email = document.getElementById('email');
+			if(email.value == ''){
+				alert('이메일은 필수로 입력해야합니다.');
+				email.focus();
+				return;
+			}
+			
+			let jobid = document.getElementById('jobId');
+			if(jobid.value == ''){
+				alert('부서번호는 필수로 입력해야합니다.');
+				jobid.focus();
+				return;
+			}
+			
+			insertForm.submit();
+		};
+	</script>
 </body>
 </html>
