@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.app.book.mapper.RentMapper">
+	<!-- 대여도서 목록조회 -->
+	<select id="selectRentInfo" resultType="BookVO">
+		SELECT 	b.book_no,
+		        b.book_name,
+		        NVL(sum(r.rent_price),0) AS rent_total_price,
+		        count(r.rent_no) AS rent_count  
+		FROM book_tbl_06 b LEFT JOIN rent_tbl_06 r
+		                   ON(b.book_no=r.book_no)
+		GROUP BY b.book_no, b.book_name
+		ORDER BY b.book_no
+	</select>
+	<!-- SELECT 	a.book_no,
+	        a.book_name,
+	        (select NVL(sum(rent_price),0)
+	        from rent_tbl_06
+	        where book_no=a.book_no)rent_total_price,
+	        (select count(*)
+	        from rent_tbl_06
+	        where book_no=a.book_no)rent_count        
+	FROM book_tbl_06 a
+	ORDER BY a.book_no -->
+	
+</mapper>
