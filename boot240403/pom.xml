@@ -79,6 +79,8 @@
 			<version>2.3.2</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- SQL Log -->
 		<dependency>
 			<groupId>org.bgee.log4jdbc-log4j2</groupId>
 			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
